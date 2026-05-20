@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Malaysian Agro-Bioscience: Durian Growth Calculus</title>
+    <!-- Tailwind CSS for sleek, modern UI styling -->
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <!-- Chart.js for high-performance responsive charting -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans min-h-screen dynamic-padding">
+
+    <div class="max-w-6xl mx-auto my-8 bg-white rounded-2xl shadow-xl border border-slate-100 overflow-hidden">
+        <!-- Banner Header -->
+        <div class="bg-gradient-to-r from-emerald-700 to-teal-600 p-6 md:p-8 text-white">
+            <span class="bg-emerald-800 text-emerald-200 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">
+                Malaysia Food Security & Precision Agriculture
+            </span>
+            <h1 class="text-2xl md:text-4xl font-extrabold mt-2 tracking-tight">
+                Applying Derivatives to Musang King (*Durio zibethinus*) Development
+            </h1>
+            <p class="text-emerald-100 mt-2 text-sm md:text-base max-w-3xl">
+                An interactive bioscience calculator demonstrating how calculus maps fruit mass accumulation to optimize resource allocations and harvest timelines.
+            </p>
+        </div>
+
+        <div class="p-6 md:p-8 space-y-8">
+            <!-- Problem Context & Mathematical Formulation -->
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <div class="lg:col-span-2 space-y-4">
+                    <h2 class="text-xl font-bold text-slate-900 border-b pb-2 border-slate-200">
+                        The Bioscience Scenario
+                    </h2>
+                    <p class="text-sm leading-relaxed text-slate-600">
+                        In precision fruit farming, predicting the mass accumulation rate allows operations managers to accurately forecast yields and optimize fertilizer applications. According to agronomic data tracking Musang King development patterns in Peninsular Malaysia (e.g., Malaysian Agricultural Research and Development Institute - MARDI, and academic literature from Universiti Putra Malaysia), a typical premium durian takes roughly <strong>120 days</strong> to develop from a pollinated flower to a mature, dropped fruit, reaching an average target weight of approximately <strong>2.5 kg (2,500 grams)</strong>.
+                    </p>
+                    <div class="bg-slate-50 p-4 rounded-xl border border-slate-200/60 text-xs text-slate-500">
+                        <strong class="text-slate-700 block mb-1">Realistic Baseline Data Reference:</strong>
+                        Aligned with baseline growth behaviors reported in <em>"The growth pattern and nutrient uptake of durian on an Oxisol"</em> (UPM Institutional Repository) and developmental intervals cataloged by International Tropical Fruits Network (TFNet, Malaysia).
+                    </div>
+                </div>
+
+                <!-- Math Equations Card -->
+                <div class="bg-slate-900 text-slate-100 p-5 rounded-xl flex flex-col justify-between shadow-inner">
+                    <div>
+                        <h3 class="text-xs uppercase tracking-widest text-emerald-400 font-bold mb-3">
+                            Mathematical Modeling
+                        </h3>
+                        <!-- Mathematical Formula Blocks -->
+                        <div class="space-y-4">
+                            <div>
+                                <span class="text-xs text-slate-400 block font-mono">Total Mass Function f(x):</span>
+                                <div class="bg-slate-800/80 p-2 rounded text-center font-mono font-bold text-emerald-300 text-sm mt-1 border border-slate-700">
+                                    f(x) = -0.00115x³ + 0.207x²
+                                </div>
+                                <span class="text-[10px] text-slate-400 mt-1 block">Yields mass in grams at day $x$</span>
+                            </div>
+                            <div>
+                                <span class="text-xs text-slate-400 block font-mono">Instantaneous Growth Rate f'(x):</span>
+                                <div class="bg-slate-800/80 p-2 rounded text-center font-mono font-bold text-yellow-300 text-sm mt-1 border border-slate-700">
+                                    f'(x) = -0.00345x² + 0.414x
+                                </div>
+                                <span class="text-[10px] text-slate-400 mt-1 block">Calculates the rate of change in grams/day</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="text-[10px] text-slate-500 mt-4 pt-2 border-t border-slate-800">
+                        *Note: Model calibrated for the standard $0 \le x \le 120$ day vegetative fruiting window.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Interactivity Instruction Callout -->
+            <div class="bg-blue-50 border-l-4 border-blue-500 p-4 rounded-r-xl">
+                <div class="flex items-start">
+                    <div class="flex-shrink-0 text-blue-500 font-bold text-lg mr-3">💡</div>
+                    <div>
+                        <h4 class="text-sm font-bold text-blue-900">Interactive Bio-Calculus Mode</h4>
+                        <p class="text-xs text-blue-700 mt-0.5">
+                            <strong>Click anywhere on the chart canvas below</strong> to sample a specific day in the crop life-cycle. The app will instantly calculate the first derivative $f'(x)$ and output an executive layman analysis of what is happening inside the fruit tissue at that precise moment.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Main Interactive Canvas Layout -->
+            <div class="grid grid-cols-1 lg:grid-cols-4 gap-6 items-start">
+                <!-- Interactive Graph Display Container -->
+                <div class="lg:col-span-3 bg-white p-4 rounded-xl border border-slate-200 shadow-sm relative h-[420px]">
+                    <canvas id="durianChart"></canvas>
+                </div>
+
+                <!-- Live Evaluation Sidebar -->
+                <div class="bg-slate-100 p-5 rounded-xl border border-slate-200 space-y-4 lg:h-[420px] flex flex-col justify-between">
+                    <div>
+                        <h3 class="text-sm font-bold text-slate-900 uppercase tracking-wider mb-3 flex items-center gap-2">
+                            <span class="w-2.5 h-2.5 bg-emerald-500 rounded-full animate-ping"></span>
+                            Live Point Inspector
+                        </h3>
+                        
+                        <div id="inspectorPrompt" class="text-center py-8 text-slate-400 text-xs italic">
+                            Click on the chart to inspect the derivative parameters of the fruit matrix.
+                        </div>
+
+                        <div id="inspectorData" class="hidden space-y-3">
+                            <div class="bg-white p-3 rounded-lg border border-slate-200">
+                                <span class="text-[11px] text-slate-400 uppercase font-bold block">Selected Timeframe</span>
+                                <span id="outDay" class="text-xl font-extrabold text-slate-800">Day --</span>
+                            </div>
+                            
+                            <div class="bg-white p-3 rounded-lg border border-slate-200">
+                                <span class="text-[11px] text-slate-400 uppercase font-bold block">Current Fruit Weight $f(x)$</span>
+                                <span id="outMass" class="text-xl font-extrabold text-emerald-600">-- grams</span>
+                            </div>
+
+                            <div class="bg-white p-3 rounded-lg border border-slate-200 bg-yellow-50/50 border-yellow-200">
+                                <span class="text-[11px] text-amber-700 uppercase font-bold block">Growth Rate $f'(x)$</span>
+                                <span id="outRate" class="text-xl font-extrabold text-amber-600 font-mono">-- g/day</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Layman Insights Output box -->
+                    <div id="laymanContainer" class="hidden bg-emerald-900 text-emerald-50 p-3.5 rounded-lg text-xs leading-relaxed shadow-sm">
+                        <strong class="text-emerald-300 block mb-1 font-semibold">Agricultural Insight:</strong>
+                        <p id="outInsight">--</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Educational Dynamic Callouts footer -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-center">
+                <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl">
+                    <span class="text-2xl block mb-1">🌱</span>
+                    <h5 class="text-xs font-bold text-slate-700 uppercase">Lag Phase (Days 0-40)</h5>
+                    <p class="text-[11px] text-slate-500 mt-1">Cell division dominates. Growth rate is positive but low; fruit structural templates are anchoring.</p>
+                </div>
+                <div class="p-4 bg-emerald-50 border border-emerald-200 rounded-xl">
+                    <span class="text-2xl block mb-1">⚡</span>
+                    <h5 class="text-xs font-bold text-emerald-800 uppercase">Exponential Phase (Days 41-80)</h5>
+                    <p class="text-[11px] text-emerald-600 mt-1">Cell expansion peak. The derivative hits its maximum velocity at exactly Day 60 (~12.42g/day).</p>
+                </div>
+                <div class="p-4 bg-amber-50 border border-amber-200 rounded-xl">
+                    <span class="text-2xl block mb-1">🍂</span>
+                    <h5 class="text-xs font-bold text-amber-800 uppercase">Ripening Phase (Days 81-120)</h5>
+                    <p class="text-[11px] text-amber-600 mt-1">Growth rate decelerates ($f'(x) \to 0$). Starch coverts to volatile compounds and simple sugars.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Application Script Execution -->
+    <script>
+        // Mathematical equation variables
+        // f(x) = -0.00115x^3 + 0.207x^2
+        // f'(x) = -0.00345x^2 + 0.414x
+        const calcMass = (x) => (-0.00115 * Math.pow(x, 3)) + (0.207 * Math.pow(x, 2));
+        const calcDerivative = (x) => (-0.00345 * Math.pow(x, 2)) + (0.414 * Math.pow(x, 1));
+
+        // Generate data structures spanning the full 120-day production timeline
+        const labels = [];
+        const massData = [];
+        const rateData = [];
+
+        for (let day = 0; day <= 120; day++) {
+            labels.push(day);
+            massData.push(calcMass(day).toFixed(1));
+            rateData.push(calcDerivative(day).toFixed(2));
+        }
+
+        // Initialize Chart.js configuration
+        const ctx = document.getElementById('durianChart').getContext('2d');
+        const durianChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: labels,
+                datasets: [
+                    {
+                        label: 'Fruit Mass f(x) (grams)',
+                        data: massData,
+                        borderColor: '#059669', // Emerald 600
+                        backgroundColor: 'rgba(5, 150, 105, 0.05)',
+                        borderWidth: 3,
+                        yAxisID: 'yMass',
+                        tension: 0.2,
+                        pointRadius: 0,
+                        pointHoverRadius: 6
+                    },
+                    {
+                        label: "Growth Velocity f'(x) (g/day)",
+                        data: rateData,
+                        borderColor: '#d97706', // Amber 600
+                        borderDash: [5, 5],
+                        backgroundColor: 'transparent',
+                        borderWidth: 2,
+                        yAxisID: 'yRate',
+                        tension: 0.2,
+                        pointRadius: 0,
+                        pointHoverRadius: 6
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                        labels: { font: { size: 11, weight: 'bold' } }
+                    },
+                    tooltip: {
+                        mode: 'index',
+                        intersect: false
+                    }
+                },
+                // Dual axis setup to capture both metrics concurrently
+                scales: {
+                    x: {
+                        title: { display: true, text: 'Days Post-Anthesis (Time x)', font: { weight: 'bold' } },
+                        grid: { display: false }
+                    },
+                    yMass: {
+                        type: 'linear',
+                        position: 'left',
+                        title: { display: true, text: 'Cumulative Mass (grams)', font: { weight: 'bold', color: '#059669' } },
+                        min: 0,
+                        max: 2700,
+                        ticks: { color: '#059669' }
+                    },
+                    yRate: {
+                        type: 'linear',
+                        position: 'right',
+                        title: { display: true, text: 'Growth Velocity (g/day)', font: { weight: 'bold', color: '#d97706' } },
+                        min: 0,
+                        max: 15,
+                        ticks: { color: '#d97706' },
+                        grid: { display: false }
+                    }
+                },
+                // Trigger dynamic functions on pointer clicks
+                onClick: (e) => {
+                    const points = durianChart.getElementsAtEventForMode(e, 'index', { intersect: false }, true);
+                    if (points.length > 0) {
+                        const targetIndex = points[0].index;
+                        updateBioInspector(targetIndex);
+                    }
+                }
+            }
+        });
+
+        // Function to update the sidebar values and layman explanation
+        function updateBioInspector(day) {
+            const mass = calcMass(day);
+            const rate = calcDerivative(day);
+
+            // Toggle visual placeholders
+            document.getElementById('inspectorPrompt').classList.add('hidden');
+            document.getElementById('inspectorData').classList.remove('hidden');
+            document.getElementById('laymanContainer').classList.remove('hidden');
+
+            // Inject numerical values
+            document.getElementById('outDay').innerText = `Day ${day}`;
+            document.getElementById('outMass').innerText = `${Math.round(mass).toLocaleString()} grams (${(mass / 1000).toFixed(2)} kg)`;
+            document.getElementById('outRate').innerText = `${rate.toFixed(2)} g/day`;
+
+            // Evaluate biological thresholds using conditional layout modeling
+            let narrative = "";
+            if (day <= 30) {
+                narrative = `Early localized cell division phase. The derivative is small (${rate.toFixed(2)} g/day) because resources are focusing on creating structural templates inside the shell rather than gaining sheer weight. Low immediate water stress risk.`;
+            } else if (day > 30 && day <= 55) {
+                narrative = `Entering the rapid exponential expansion window. The rate is surging upward. The cells are taking on massive amounts of water and dry matter. Ensure your irrigation system is running smoothly!`;
+            } else if (day > 55 && day <= 65) {
+                narrative = `CRITICAL POINT: Maximum acceleration inflection zone ($f''(x) \\approx 0$). At ${rate.toFixed(2)} grams per single day, this is the absolute speed limit of nutrient loading. Potassium and water demands are at their highest level right now.`;
+            } else if (day > 65 && day <= 90) {
+                narrative = `Growth is slowing down mathematically, but cumulative weight is almost at peak. The tree is shifting operations away from scaling size toward sugar aggregation and organic matter stabilization.`;
+            } else {
+                narrative = `Maturation & Drop phase ($f'(x) \\to 0$). The fruit has ceased physical weight gain. Internal chemical reactions are now converting starches to sugars to create that signature rich Musang King texture. Prepare for net collection!`;
+            }
+
+            document.getElementById('outInsight').innerText = narrative;
+        }
+    </script>
+</body>
+</html>
